@@ -18,7 +18,7 @@ for (const args of [['init', '-b', 'main'], ['config', 'user.name', 'Plugin Test
 assert.equal(run('python3', ['request.py'], { cwd: repo }).trim(), 'math-agent');
 const revision = run('git', ['rev-parse', 'HEAD'], { cwd: repo }).trim();
 const manager = path.join(installedRoot, 'skills/source-code-learning-coach/scripts/manage_learning_workspace.py');
-const manage = (args) => run('python3', [manager, ...args]).trim();
+const manage = (args) => run('python3', [manager, ...args], { cwd: repo }).trim();
 const learningRoot = manage(['init', '--repo', repo, '--roadmap', path.join(packageRoot, 'tests/fixtures/roadmap.json')]);
 manage(['start-day', '--learning-root', learningRoot, '--day', '1']);
 const state = JSON.parse(fs.readFileSync(path.join(learningRoot, '学习状态.json'), 'utf8'));

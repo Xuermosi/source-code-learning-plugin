@@ -17,7 +17,7 @@ Teach from real source and preserve an auditable continuation point. A one-off e
 | Flow closed | Ask whether to create the most suitable diagram. After confirmation, read [the bundled diagram handoff](references/diagram-handoff.md), use sibling `archify`, and register the checked artifact. |
 | Day closed | Ask whether to create a unified framework diagram and summary connecting the Day's flows. |
 
-For persistent create/resume work, **first read** [references/workspace-contract.md](references/workspace-contract.md). Inspect manager commands with `python3 scripts/manage_learning_workspace.py --help` and the relevant subcommand `--help`. Reuse [assets/templates/](assets/templates/); do not duplicate or infer the state schema.
+Resolve `<coach-root>` from the installed location of this `SKILL.md`; all references, templates and scripts below belong to that directory, not the studied repository's working directory. For persistent create/resume work, **first read** [references/workspace-contract.md](references/workspace-contract.md). Inspect manager commands with `python3 <coach-root>/scripts/manage_learning_workspace.py --help` and the relevant subcommand `--help`. Reuse [assets/templates/](assets/templates/); do not duplicate or infer the state schema.
 
 ## New persistent route
 

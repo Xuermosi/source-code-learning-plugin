@@ -10,7 +10,8 @@
       "license": "MIT",
       "modifications": [
         "Added the user-approved MIT license.",
-        "Added a sibling Archify handoff reference and routed consented diagrams through it."
+        "Added a sibling Archify handoff reference and routed consented diagrams through it.",
+        "Resolved workspace-manager scripts from the installed coach root rather than the studied repository CWD."
       ],
       "files": {
         "agents/openai.yaml": "b2a2dd4479aff6f6eac16208945948b540f3f7516674c4552394a24e353e51e4",
@@ -22,9 +23,9 @@
         "assets/templates/source-guide.md": "817422c3fb2d0aab5d1e59b80241d70553505e7e6f6dbbd07f353794f34372f5",
         "LICENSE": "26811217471c691a42d34365ffef9ce27924764078d284645786b29f713836b9",
         "references/diagram-handoff.md": "7b7ea6ddfbcf202bed9981be8d334ff661996a26e70d1e46354cd40fbd7e5123",
-        "references/workspace-contract.md": "b3fa28198546a4f85d9491ee0f634a835d6bb8b108986400a7d311057bcc6b0c",
+        "references/workspace-contract.md": "aff6bf92c98e72e55064042c711742bcc8669235c6f0596c3d7ab17c51f20f23",
         "scripts/manage_learning_workspace.py": "c73d83ae982db1208bfbb3c964802e41a45a91bf20262c2bc765a4527d476ff5",
-        "SKILL.md": "1472269c0e2ea51a9d360b6046e0a849b479c15db598305811562262baf311c7",
+        "SKILL.md": "a9e3b044ce5d3315d9e8396550541c7c207c40dd3bf95ec846fd69f743b86096",
         "tests/test_manage_learning_workspace.py": "c66004e8ff564333a5ef5d8286f900c5c18b28a0b1e9511c3e76d6b3755e1a11"
       }
     },

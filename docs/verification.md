@@ -7,7 +7,7 @@ Archify's 312 bundled files have been compared against Git blob hashes from upst
 | Gate | Actual result |
 | --- | --- |
 | Bundle integrity and manifests | Passed: 325 bundled file SHA-256 values match; root/fallback identities agree; marketplace points at this package. |
-| Coach baseline comparison | 10 existing files match commit `63e0587`; only `SKILL.md` is changed, with the added handoff reference and MIT license recorded separately. |
+| Coach baseline comparison | 9 existing files match commit `63e0587`; `SKILL.md` and `references/workspace-contract.md` document installed-root resolution, with the added handoff reference and MIT license recorded separately. |
 | Both Skill frontmatters | Passed the skill-creator validator. |
 | Coach regression suite | 96 tests passed. |
 | Archify finalizer and update integration tests | 34 tests passed. |
@@ -19,6 +19,7 @@ Archify's 312 bundled files have been compared against Git blob hashes from upst
 | Sequence width review | Applied upstream's one-round spread-column review and repeated the complete finalizer; passed. |
 | Learning-handoff update behavior | Finalizer receipt reports `update.reason: disabled`. |
 | Perceptual visual review | Not requested; automated browser results are not a claim of perceptual approval. |
+| Whole-export scan | Passed with no unresolved findings. `node scripts/scan-export.mjs` covers the root, scripts, docs, and both Skills for credential patterns, personal absolute paths, private IPs, environment/key files, symlinks, and unexpected files over 5 MiB. One IP literal in a public upstream security test is explicitly reviewed and allowlisted only at its pinned file hash. This is best effort, not proof of absence of private data. |
 | Public GitHub marketplace add/install | Pending the initial publication; will be checked immediately afterward. |
 
 The fixture is `tests/fixtures/request.py`, committed in a temporary local Git repository with `link_mode: local-only`. It returns a selected string and makes no agent/network request. Diagram evidence is checked against that fixture revision; it does not claim to describe another project's implementation.

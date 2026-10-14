@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { bundleFiles } from './bundle-files.mjs';
+import { scanExport } from './scan-export.mjs';
 
 const root = path.resolve(process.argv[2] || path.join(path.dirname(fileURLToPath(import.meta.url)), '..'));
 const read = (file) => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
@@ -55,4 +56,6 @@ for (const file of ['README.md', 'README.zh-CN.md']) {
     if (!/^[a-z]+:/.test(match[1])) assert.ok(fs.existsSync(path.resolve(root, match[1])), `Broken link: ${file} → ${match[1]}`);
   }
 }
-console.log(`Package checks passed: manifests agree, marketplace resolves locally, ${total} bundled file hashes match, licenses and README links exist.`);
+const scan = scanExport(root);
+assert.deepEqual(scan.findings, [], 'Resolve export findings before publication.');
+console.log(`Package checks passed: manifests agree, marketplace resolves locally, ${total} bundled file hashes match, licenses and README links exist; ${scan.files} exported files scanned without findings.`);
