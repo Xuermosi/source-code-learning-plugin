@@ -1,0 +1,2 @@
+# Preserve the byte-identical upstream snapshot, including generated HTML whitespace.
+skills/archify/** -whitespace

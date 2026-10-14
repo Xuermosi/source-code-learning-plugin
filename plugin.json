@@ -1,0 +1,28 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "source-code-learning-plugin",
+  "version": "0.1.0",
+  "description": "Learn repositories from real source with resumable progress and consented interactive diagrams.",
+  "author": {
+    "name": "Xuermosi",
+    "url": "https://github.com/Xuermosi"
+  },
+  "homepage": "https://github.com/Xuermosi/source-code-learning-plugin",
+  "repository": "https://github.com/Xuermosi/source-code-learning-plugin",
+  "license": "MIT",
+  "keywords": ["source-code", "learning", "diagrams", "archify", "codex"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Source Code Learning",
+        "shortDescription": "Read real code, track progress, and visualize flows",
+        "longDescription": "A source-code learning coach and bundled Archify renderer for multi-day repository study with source-linked notes and optional checked HTML diagrams.",
+        "developerName": "Xuermosi",
+        "category": "Coding",
+        "capabilities": ["Read", "Write", "Interactive"],
+        "websiteURL": "https://github.com/Xuermosi/source-code-learning-plugin",
+        "defaultPrompt": ["Help me learn this repository from real source code and preserve my progress."]
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "title": "Plugin installation study fixture",
+  "days": [
+    {
+      "day": 1,
+      "title": "Trace the request route",
+      "checkpoints": [
+        {"id": "request-route", "title": "Close the request route and register its diagram", "weight": 100}
+      ]
+    }
+  ]
+}

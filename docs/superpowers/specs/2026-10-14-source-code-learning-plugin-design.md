@@ -1,6 +1,6 @@
 # Source Code Learning Plugin — Design
 
-- **Status:** Approved for specification review
+- **Status:** Approved after independent specification review
 - **Date:** 2026-10-14
 - **Target repository:** `Xuermosi/source-code-learning-plugin` (public)
 
@@ -61,7 +61,7 @@ The initial plugin release vendors a pinned snapshot of both Skills rather than 
 
 The manifest and README identify the bundled versions. Future upgrades update the bundled snapshot deliberately, then repeat the plugin validation and end-to-end learning-flow test. The standalone upstream repositories remain independently maintainable.
 
-Record upstream URL, full commit, version/tag, bundled file hashes, and intentional changes in `bundled-sources.json`. Source Archify from its reviewed v3.0.1 release (commit `2ab3cae7ac2c2a55d7386ca789d03c4fcd31816c`). Review the exported runtime files before execution and exclude caches, dependency installs, personal artifacts, unreviewed hooks, MCP mappings, and initialization scripts. Preserve Archify's bounded upstream update check and document its network access; this check never installs an update. The bundle is scanned for credentials, private material, local paths, symlinks, and unexpected large files before publication.
+Record upstream URL, full commit, version/tag, bundled file hashes, and intentional changes in `bundled-sources.json`. Source Archify from its reviewed v3.0.1 release (commit `2ab3cae7ac2c2a55d7386ca789d03c4fcd31816c`). Review the exported runtime files before execution and exclude caches, dependency installs, personal artifacts, unreviewed hooks, MCP mappings, and initialization scripts. The learning handoff disables Archify's upstream update check using its supported `ARCHIFY_UPDATE_CHECK_DISABLED=1` setting; no diagram-consent step grants unrelated network authority. Archify's independent use retains its upstream defaults, documented in the README. The bundle is scanned for credentials, private material, local paths, symlinks, and unexpected large files before publication.
 
 ## Licensing and attribution
 
@@ -78,6 +78,7 @@ The user selected MIT for the original coach and new plugin integration. Add the
 - A diagram is registered only after Archify's delivery checks pass.
 - The plugin uses local files by default. Publishing artifacts, using Git, or contacting an external service still requires explicit user authorization.
 - If no validated persistent Day is active, report a pending diagram in chat without creating or guessing a Day-summary path. One-off explanations need no learning workspace or artifact registration.
+- GitHub marketplace add/install uses the chosen public repository as its source. Learning diagram generation remains local with the update check disabled; extra network actions remain outside ordinary learning authority. Browser tests load the generated local artifact.
 
 ## Verification
 

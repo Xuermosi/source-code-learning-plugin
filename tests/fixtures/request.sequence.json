@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "源码学习验收：请求分类与选择",
+    "locale": "zh-CN",
+    "output": "request-route.html",
+    "quality_profile": "showcase"
+  },
+  "participants": [
+    {"id": "caller", "type": "external", "label": "调用方", "sources": [{"path": "request.py", "line": 14, "end_line": 15}]},
+    {"id": "handler", "type": "backend", "label": "请求处理", "sources": [{"path": "request.py", "line": 9, "end_line": 11}]},
+    {"id": "classifier", "type": "backend", "label": "分类函数", "sources": [{"path": "request.py", "line": 1, "end_line": 2}]},
+    {"id": "selector", "type": "backend", "label": "选择函数", "sources": [{"path": "request.py", "line": 5, "end_line": 6}]}
+  ],
+  "messages": [
+    {"from": "caller", "to": "handler", "y": 180, "label": "handle_request(text)", "variant": "emphasis"},
+    {"from": "handler", "to": "classifier", "y": 226, "label": "classify(text)"},
+    {"from": "classifier", "to": "handler", "y": 272, "label": "math", "variant": "return"},
+    {"from": "handler", "to": "selector", "y": 318, "label": "pick_agent(intent)"},
+    {"from": "selector", "to": "handler", "y": 364, "label": "math-agent", "variant": "return"},
+    {"from": "handler", "to": "caller", "y": 410, "label": "math-agent", "variant": "return"}
+  ],
+  "activations": [
+    {"participant": "handler", "from": 176, "to": 414, "type": "backend"},
+    {"participant": "classifier", "from": 222, "to": 276, "type": "backend"},
+    {"participant": "selector", "from": 314, "to": 368, "type": "backend"}
+  ],
+  "cards": [
+    {"dot": "emerald", "title": "调用与返回已闭环", "items": ["该本地测试输入以 math: 开头，分类函数返回 math。", "选择函数返回字符串 math-agent；没有网络转发。", "图表依据固定提交中的 request.py，不代表其他业务仓库的实现。"]}
+  ]
+}
