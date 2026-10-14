@@ -20,10 +20,13 @@ Archify's 312 bundled files have been compared against Git blob hashes from upst
 | Learning-handoff update behavior | Finalizer receipt reports `update.reason: disabled`. |
 | Perceptual visual review | Not requested; automated browser results are not a claim of perceptual approval. |
 | Whole-export scan | Passed with no unresolved findings. `node scripts/scan-export.mjs` covers the root, scripts, docs, and both Skills for credential patterns, personal absolute paths, private IPs, environment/key files, symlinks, and unexpected files over 5 MiB. One IP literal in a public upstream security test is explicitly reviewed and allowlisted only at its pinned file hash. This is best effort, not proof of absence of private data. |
-| Public GitHub marketplace add/install | Pending the initial publication; will be checked immediately afterward. |
+| Public GitHub marketplace add/install | Passed from `Xuermosi/source-code-learning-plugin` at commit `4674b6d`, using a new config/cache and empty working directory with no local marketplace shadowing. Both Skills are enabled and discovered from the installed plugin cache. |
+| Public-installed bundle integrity and flow | 325 bundled file hashes matched, whole-export scan passed, and the public-installed renderer repeated the sequence/browser/registration/checkpoint flow successfully. |
 
 The fixture is `tests/fixtures/request.py`, committed in a temporary local Git repository with `link_mode: local-only`. It returns a selected string and makes no agent/network request. Diagram evidence is checked against that fixture revision; it does not claim to describe another project's implementation.
 
 The integration runner explicitly grants test-fixture diagram consent. It tests installed tools and state transitions deterministically without a model conversation. Conversational pacing and consent enforcement are specified in the bundled coach instructions, not proven by this deterministic fixture.
 
 Full installation, app-server discovery, Archify finalizer/browser receipts, candidate JSON, checked HTML, and workspace state are retained locally in temporary test workspaces. This report excludes absolute personal paths and authentication data.
+
+Post-verification changes update this report and isolate the installation runner's default CWD; bundled Skill bytes remain those of the tested public snapshot. Independent specification and focused implementation reviews passed.

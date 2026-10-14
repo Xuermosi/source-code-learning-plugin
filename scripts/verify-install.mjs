@@ -6,14 +6,17 @@ import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
 
-const [source, binary = 'codex', cwd = process.cwd()] = process.argv.slice(2);
+const [source, binary = 'codex', suppliedCwd] = process.argv.slice(2);
 if (!source) throw new Error('Usage: node scripts/verify-install.mjs <marketplace-root-or-github-repo> [codex-binary] [working-directory]');
 const testRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'source-learning-install-'));
+const sourceRef = fs.existsSync(source) ? path.resolve(source) : source;
+const cwd = suppliedCwd ? path.resolve(suppliedCwd) : path.join(testRoot, 'workspace');
+if (!suppliedCwd) fs.mkdirSync(cwd);
 const env = { ...process.env, CODEX_HOME: path.join(testRoot, 'codex-state') };
 fs.mkdirSync(env.CODEX_HOME);
 const run = (args) => execFileSync(binary, args, { cwd, env, encoding: 'utf8', timeout: 120000, maxBuffer: 8 * 1024 * 1024 });
 
-run(['plugin', 'marketplace', 'add', source]);
+run(['plugin', 'marketplace', 'add', sourceRef]);
 const install = JSON.parse(run(['plugin', 'add', 'source-code-learning-plugin@source-code-learning', '--json']));
 fs.writeFileSync(path.join(testRoot, 'install.json'), JSON.stringify(install, null, 2));
 const child = spawn(binary, ['app-server', '--stdio'], { cwd, env, stdio: ['pipe', 'pipe', 'pipe'] });
