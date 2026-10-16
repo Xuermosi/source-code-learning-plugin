@@ -1,0 +1,18 @@
+{
+  "name": "source-code-learning-plugin",
+  "version": "0.2.0",
+  "type": "module",
+  "files": [
+    "dsh/**",
+    "skills/**",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./dsh/cordis.patch.yml"
+    }
+  }
+}

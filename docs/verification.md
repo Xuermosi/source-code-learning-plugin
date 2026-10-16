@@ -1,15 +1,22 @@
 # Verification
 
-Release: 0.1.0. Checked on 2026-10-14, on macOS with Node.js 24.14.0, Python 3, Codex CLI 0.162.0-alpha.17.2, and Microsoft Edge (Chromium).
+Release candidate: 0.2.0. Current DSH-specific checks were run on 2026-10-16. The earlier 0.1.0 Archify/Codex evidence below is retained as historical evidence; it is not a claim that every earlier gate was rerun for this candidate.
+
+| Current DSH gate | Actual result |
+| --- | --- |
+| Static and controlled DSH runner checks | `node --test tests/dsh-bundle.test.mjs` passed 16 tests. Static structure checks cover help and explicit-skip ordering; a controlled fake DSH execution verifies package-manager environment isolation and cleanup after a nonzero DSH command. The suite also covers the isolated bundle contract, nonzero executable failures, and rendered dump provider-row binding. |
+| Real isolated DSH install and catalog | `node scripts/verify-dsh-install.mjs --dsh-bin <local-dsh>` installed the bundle in an isolated profile and discovered `archify` and `source-code-learning-coach`. An earlier retry in this same validation cycle failed nonzero when Corepack timed out while requesting `https://registry.npmjs.org/pnpm/latest`; the runner correctly treated that external package-manager failure as a failure rather than `skipped`. |
+
+The exact local executable path is intentionally omitted from this public report. The verifier can only report `skipped` when the requested `dsh` executable is unavailable; install, configuration, frontmatter, or catalog failures return nonzero.
 
 Archify's 312 bundled files have been compared against Git blob hashes from upstream commit `2ab3cae7ac2c2a55d7386ca789d03c4fcd31816c` and match exactly. Original licenses and notices are retained.
 
 | Gate | Actual result |
 | --- | --- |
-| Bundle integrity and manifests | Passed: 325 bundled file SHA-256 values match; root/fallback identities agree; marketplace points at this package. |
-| Coach baseline comparison | 9 existing files match commit `63e0587`; `SKILL.md` and `references/workspace-contract.md` document installed-root resolution, with the added handoff reference and MIT license recorded separately. |
+| Bundle integrity and manifests | Re-run for 0.2.0: `node scripts/check-package.mjs` confirmed matching manifests, 326 bundled-file SHA-256 values, and a 332-file tarball allowlist. |
+| Coach baseline comparison | The source reference remains commit `63e0587`; plugin-local changes retain installed-root resolution, the checked Archify handoff, MIT license, and the current Day-plan/cadence additions recorded in `bundled-sources.json`. |
 | Both Skill frontmatters | Passed the skill-creator validator. |
-| Coach regression suite | 96 tests passed. |
+| Coach regression suite | Re-run for 0.2.0: 97 tests passed, including initialization and stage-transition preservation of `DayXX/学习单元.md`. |
 | Archify finalizer and update integration tests | 34 tests passed. |
 | Local marketplace add/install | Passed through the real Codex plugin loader using an isolated config/cache. |
 | Fresh app-server `skills/list` | Both `source-code-learning-plugin:source-code-learning-coach` and `source-code-learning-plugin:archify` enabled and loaded from that isolated plugin cache. |
@@ -29,4 +36,4 @@ The integration runner explicitly grants test-fixture diagram consent. It tests 
 
 Full installation, app-server discovery, Archify finalizer/browser receipts, candidate JSON, checked HTML, and workspace state are retained locally in temporary test workspaces. This report excludes absolute personal paths and authentication data.
 
-Post-verification changes update this report and isolate the installation runner's default CWD; bundled Skill bytes remain those of the tested public snapshot. Independent specification and focused implementation reviews passed.
+The 0.2.0 candidate changes the bundled coach's Day-plan/cadence files and records their reviewed SHA-256 values in `bundled-sources.json`; the bundled Archify source remains pinned to its reviewed public snapshot. Independent specification and focused implementation reviews passed.

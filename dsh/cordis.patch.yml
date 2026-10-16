@@ -1,0 +1,9 @@
+- insert:
+    - id: source-code-learning-plugin-skill-filesystem
+      name: '@deepseek-ai/dsh-skill-filesystem'
+      inject: [skills]
+      config:
+        providerName: source-code-learning-plugin
+        includeDefaultRoots: false
+        bundledSkillDir: !!js process.getBuiltinModule('node:path').join(process.getBuiltinModule('node:path').dirname(process.getBuiltinModule('node:module').createRequire(baseUrl).resolve('source-code-learning-plugin/package.json')), 'skills')
+        watch: false

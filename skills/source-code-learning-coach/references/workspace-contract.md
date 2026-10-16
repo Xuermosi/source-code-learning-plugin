@@ -1,6 +1,6 @@
 # Source-Code Learning Workspace Contract
 
-This document defines the persistent workspace written by the source-code learning coach. Resolve `<coach-root>` from the installed coach `SKILL.md`, independently of the studied repository's working directory. The command surface is intentionally not duplicated here; run `python3 <coach-root>/scripts/manage_learning_workspace.py --help` and the relevant subcommand `--help` for current usage.
+This document defines the persistent workspace written by the source-code learning coach. Resolve `<coach-root>` from the installed coach `SKILL.md`, independently of the studied repository's working directory. The command surface is intentionally not duplicated here; run `python3 <coach-root>/scripts/manage_learning_workspace.py --help` and the relevant subcommand `--help` for current usage. Every initialized Day also has a human-authored `DayXX/学习单元.md`; it is not authoritative state and is not a managed artifact projection.
 
 ## 1. Roadmap input
 

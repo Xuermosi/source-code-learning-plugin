@@ -8,7 +8,7 @@ Install a source-code learning coach and **Archify** together. Learn any languag
 
 | Skill | Purpose |
 | --- | --- |
-| `source-code-learning-coach` | Propose a learning roadmap, trace small source segments, show progress, and save source guides, Q&A, summaries, and resume points. |
+| `source-code-learning-coach` | Propose a dependency-ordered roadmap, materialize each Day's plan, trace small source segments, show progress, and save source guides, Q&A, summaries, and resume points. |
 | `archify` | Generate and check architecture, workflow, sequence, data-flow, and lifecycle diagrams as standalone interactive HTML. |
 
 The coach asks before generating a diagram, then uses **the Archify copy bundled in this plugin**. Archify can also be used independently. No separate Archify installation is needed.
@@ -19,10 +19,11 @@ The coach asks before generating a diagram, then uses **the Archify copy bundled
 - Python 3.10+ for the learning workspace manager.
 - The persistent workspace manager requires secure POSIX filesystem operations (macOS/Linux); unsupported operations fail closed.
 - Node.js 18+ and a compatible Chromium browser for Archify's real-browser delivery checks. Installing the plugin does not install these runtimes.
+- For the native DeepSeek Harness (DSH) path, a DSH runtime that provides the `dsh plugin` command and the profile you choose (for example, `web`).
 
 The learning workflow needs access to a local source repository. Installing this bundle alone does not provide a browser-only ChatGPT session with a local filesystem or executable runtime.
 
-## Install
+## Install with Codex
 
 Add the GitHub repository as a marketplace, then install its one plugin:
 
@@ -43,6 +44,16 @@ codex plugin add source-code-learning-plugin@source-code-learning
 
 These are repo/CLI marketplace installation paths, not a listing in the universal public plugin directory. See the [official packaging guide](https://developers.openai.com/plugins/build/plugins).
 
+## Install with DeepSeek Harness (native bundle)
+
+With DSH installed and a `web` profile available, add this repository as a native bundle:
+
+```bash
+dsh plugin --profile web add github:Xuermosi/source-code-learning-plugin
+```
+
+Then start that DSH profile normally. The bundle registers an isolated filesystem Skill provider: it mounts only this installed package's `skills/` directory, so it does not replace DSH's built-in Skill provider or scan your project and user Skill roots through this provider.
+
 ## Learn a project
 
 Select the bundled **Source Code Learning Coach** skill and ask:
@@ -50,7 +61,9 @@ Select the bundled **Source Code Learning Coach** skill and ask:
 ```text
 Help me study this local repository from real source code over several days.
 Propose the roadmap first, keep a visible progress bar, and preserve my progress.
-Ask me before drawing a diagram after each completed flow.
+For each Day: give the full plan, main call chain, then one small real source segment.
+Explain caller, callee, the split, and returned value before syntax; ask questions only after a closed flow.
+Ask me explicitly before drawing a diagram after each completed flow.
 ```
 
 After roadmap approval, the coach creates a sibling learning directory:
@@ -61,6 +74,7 @@ my-project-3天学习路线/
 ├── 学习状态.json
 ├── 学习状态.md
 ├── Day01/
+│   ├── 学习单元.md
 │   └── 进度条0-30%/
 │       ├── 01-entry-source/
 │       │   ├── 源码导读.md
@@ -71,7 +85,7 @@ my-project-3天学习路线/
 └── Day03/
 ```
 
-Names under each source folder follow the manager's generated layout. Progress comes from completed weighted checkpoints. Source-specific artifacts remain associated with their reading order and source owner; Day-wide artifacts belong to the active stage. Resume from validated JSON state in a later conversation.
+Every `DayXX/学习单元.md` records the confirmed central question, one call-and-return flow, bounded source scope, pitfalls, completion check, and planned artifacts. The first lesson follows that plan → main call chain → one small source segment. Progress comes from completed weighted checkpoints; source-specific artifacts remain associated with their reading order and source owner, while Day-wide artifacts belong to the active stage. Resume from validated JSON state in a later conversation.
 
 At daily close, the coach offers an integrated framework diagram and summary linking the day's flows. A one-off source explanation does not create a persistent learning workspace.
 
@@ -99,14 +113,23 @@ LICENSE
 THIRD_PARTY_NOTICES.md
 ```
 
-Initial plugin version: **0.1.0**. Archify: **3.0.1** (`v3.0.1`). Coach baseline: commit `63e0587c2be1415566a8135863f099210a2ae205`, with a plugin-local diagram handoff and MIT license. The standalone [coach repository](https://github.com/Xuermosi/source-code-learning-coach) remains available as the lightweight single-skill edition.
+Plugin version: **0.2.0**. Archify: **3.0.1** (`v3.0.1`). Coach baseline: commit `63e0587c2be1415566a8135863f099210a2ae205`, with plugin-local diagram handoff, MIT license, and the reviewed Day-plan/cadence additions recorded in `bundled-sources.json`. The standalone [coach repository](https://github.com/Xuermosi/source-code-learning-coach) remains available as the lightweight single-skill edition.
 
 ## Verify
 
 ```bash
 node scripts/check-package.mjs
 python3 -m unittest discover -s skills/source-code-learning-coach/tests -p 'test_manage_learning_workspace.py'
+node scripts/verify-dsh-install.mjs
 ```
+
+To use a particular DSH executable, pass it explicitly:
+
+```bash
+node scripts/verify-dsh-install.mjs --dsh-bin /path/to/dsh
+```
+
+The DSH verifier creates a temporary profile, homes, and package-manager caches; it installs the local candidate, dumps the composed configuration, and checks that the installed Skill catalog contains both bundled Skills. A successful run reports that isolated verification passed. If the requested `dsh` executable is absent, it reports `skipped` and exits successfully; installation, configuration, or catalog-discovery failures exit nonzero instead.
 
 See [the verification report](docs/verification.md) for actual installation, discovery, and diagram delivery results. Upgrades require an explicit snapshot refresh and renewed validation; the plugin does not fetch executable dependencies at runtime.
 

@@ -244,6 +244,41 @@ class WorkspaceCliTests(unittest.TestCase):
     def test_templates_project_durable_learning_content(self) -> None:
         root = self.init_workspace()
         self.assertIn(
+            "每日学习单元", (root / "学习路线.md").read_text(encoding="utf-8")
+        )
+        day_one_unit = root / "Day01" / "学习单元.md"
+        day_two_unit = root / "Day02" / "学习单元.md"
+        headings = [
+            "今日中心问题",
+            "本日主调用链",
+            "限定源码范围",
+            "关键边界 / 常见误区",
+            "验收与产出",
+            "固定学习节奏",
+        ]
+        expected_units = (
+            (
+                day_one_unit,
+                "# Day 1｜入口",
+                "d1-entry：读入口（20%）；d1-flow：闭环调用链（50%）；d1-summary：完成总结（30%）",
+            ),
+            (day_two_unit, "# Day 2｜依赖", "d2-deps：读依赖（100%）"),
+        )
+        for unit_path, first_heading, checkpoints in expected_units:
+            with self.subTest(unit=unit_path.parent.name):
+                self.assertTrue(unit_path.is_file())
+                content = unit_path.read_text(encoding="utf-8")
+                self.assertNotIn("<!-- learning-coach:artifacts:start -->", content)
+                self.assertNotIn("<!-- learning-coach:artifacts:end -->", content)
+                self.assertNotIn("{{", content)
+                self.assertNotIn("}}", content)
+                self.assertEqual(content.splitlines()[0], first_heading)
+                self.assertIn(checkpoints, content)
+                self.assertEqual(
+                    [line[3:] for line in content.splitlines() if line.startswith("## ")],
+                    headings,
+                )
+        self.assertIn(
             "## Day 1", (root / "学习路线.md").read_text(encoding="utf-8")
         )
         self.assertIn(
@@ -886,6 +921,21 @@ class WorkspaceCliTests(unittest.TestCase):
         self.assertEqual(state["stages"][-1]["status"], "active")
         self.assertEqual(active_stage_count(root), 1)
 
+    def test_day_learning_unit_survives_stage_transition(self) -> None:
+        root = self.init_workspace()
+        learning_unit = root / "Day01" / "学习单元.md"
+        before = learning_unit.read_text(encoding="utf-8")
+
+        self.run_state_command("start-day", root, "--day", "1")
+        self.run_state_command("complete-checkpoint", root, "--checkpoint", "d1-entry")
+        self.run_state_command("complete-checkpoint", root, "--checkpoint", "d1-flow")
+
+        self.assertEqual(self.read_state(root)["current"]["stage"]["range"], [61, 100])
+        after = learning_unit.read_text(encoding="utf-8")
+        self.assertEqual(after, before)
+        self.assertNotIn("<!-- learning-coach:artifacts:start -->", after)
+        self.assertNotIn("<!-- learning-coach:artifacts:end -->", after)
+
     def test_reopen_checkpoint_creates_revision_stage_and_records_reason(self) -> None:
         root = self.init_workspace()
         self.run_state_command("start-day", root, "--day", "1")
@@ -1466,6 +1516,7 @@ class WorkspaceCliTests(unittest.TestCase):
     def test_start_day_rejects_symlinked_day_parent_without_external_writes(self) -> None:
         root = self.init_workspace()
         day_directory = root / "Day01"
+        (day_directory / "学习单元.md").unlink()
         day_directory.rmdir()
         external_day = self.base / "external-day-before-start"
         external_day.mkdir()

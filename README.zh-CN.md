@@ -8,7 +8,7 @@
 
 | Skill | 职责 |
 | --- | --- |
-| `source-code-learning-coach` | 规划学习路线、逐段读真实源码、显示进度条，保存源码导读、问答、总结和续学位置。 |
+| `source-code-learning-coach` | 规划有依赖顺序的学习路线、写入每日学习单元、逐段读真实源码、显示进度条，保存源码导读、问答、总结和续学位置。 |
 | `archify` | 生成并校验架构图、流程图、时序图、数据流图和生命周期图，交付独立可交互 HTML。 |
 
 学习教练先问你是否需要画图，同意后使用**插件内置的 Archify**；Archify 也可以独立使用。无需再单独安装 Archify。
@@ -19,10 +19,11 @@
 - Python 3.10+：用于学习工作区管理。
 - 持久化学习工具依赖 POSIX（macOS/Linux）的安全文件操作；运行环境不支持时会停止写入。
 - Node.js 18+ 与兼容的 Chromium 浏览器：用于 Archify 的真实浏览器交付校验。安装插件不会自动安装这些运行环境。
+- 原生 DeepSeek Harness（DSH）安装路径需要已安装的 DSH、可用的 `dsh plugin` 命令，以及你选择的 Profile（例如 `web`）。
 
 源码学习需要访问本地仓库。仅安装插件不会让纯浏览器 ChatGPT 会话自动获得本地文件系统和执行环境。
 
-## 安装
+## 用 Codex 安装
 
 先添加 GitHub 仓库为插件市场，再安装其中的插件：
 
@@ -43,6 +44,16 @@ codex plugin add source-code-learning-plugin@source-code-learning
 
 以上是仓库/命令行插件市场的安装方式，尚未上架公共插件目录。可参考[官方打包说明](https://developers.openai.com/plugins/build/plugins)。
 
+## 用 DeepSeek Harness 安装（原生 Bundle）
+
+已安装 DSH 且存在 `web` Profile 时，可将本仓库作为原生 Bundle 加入：
+
+```bash
+dsh plugin --profile web add github:Xuermosi/source-code-learning-plugin
+```
+
+随后按平常方式启动该 DSH Profile。这个 Bundle 会注册独立的文件系统 Skill Provider：它只挂载已安装包内的 `skills/` 目录，不会替换 DSH 内置的 Skill Provider，也不会通过此 Provider 扫描你的项目或用户 Skill 根目录。
+
 ## 开始学习
 
 选择插件中的 **Source Code Learning Coach** Skill，然后这样提问：
@@ -50,7 +61,9 @@ codex plugin add source-code-learning-plugin@source-code-learning
 ```text
 带我分几天学习这个本地仓库，从真实源码开始。
 先给出学习路线，全程显示进度条，并保存学习进度。
-每学完一个完整流程，先问我是否需要画图。
+每天先给出完整计划和主调用链，再读一小段真实源码。
+先讲清调用者、被调用者、为什么这么拆、返回什么；完成小闭环后再提问。
+每学完一个完整流程，明确问我是否需要画图。
 ```
 
 确认路线后，教练会在仓库旁建立学习目录：
@@ -61,6 +74,7 @@ my-project-3天学习路线/
 ├── 学习状态.json
 ├── 学习状态.md
 ├── Day01/
+│   ├── 学习单元.md
 │   └── 进度条0-30%/
 │       ├── 01-entry-source/
 │       │   ├── 源码导读.md
@@ -71,7 +85,7 @@ my-project-3天学习路线/
 └── Day03/
 ```
 
-源码目录内的具体名称以管理工具生成为准。进度由完成的加权检查点计算；源码对应的产物按阅读顺序归档到对应源码目录，全局产物归属于当前进度阶段。下次对话从经校验的 JSON 状态继续。
+每个 `DayXX/学习单元.md` 会记录已确认的中心问题、一条调用—返回流程、限定源码范围、误区、验收和计划产出。当天首次学习固定按“完整计划 → 主调用链 → 一小段真实源码”展开。进度由完成的加权检查点计算；源码对应的产物按阅读顺序归档到对应源码目录，全局产物归属于当前进度阶段。下次对话从经校验的 JSON 状态继续。
 
 每天结束时，教练会询问你是否需要将当天各个流程连接成整合框架图和总结。一次性源码答疑不会自动创建持久化学习目录。
 
@@ -99,14 +113,23 @@ LICENSE
 THIRD_PARTY_NOTICES.md
 ```
 
-初始插件版本为 **0.1.0**。Archify 为 **3.0.1**（`v3.0.1`）。学习教练以提交 `63e0587c2be1415566a8135863f099210a2ae205` 为基线，在插件副本中加入图表交接规则和 MIT 许可。轻量单 Skill 版仍可在[原教练仓库](https://github.com/Xuermosi/source-code-learning-coach)使用。
+插件版本为 **0.2.0**。Archify 为 **3.0.1**（`v3.0.1`）。学习教练以提交 `63e0587c2be1415566a8135863f099210a2ae205` 为基线；图表交接、MIT 许可，以及每日学习单元/固定节奏的审查修改均记录在 `bundled-sources.json`。轻量单 Skill 版仍可在[原教练仓库](https://github.com/Xuermosi/source-code-learning-coach)使用。
 
 ## 验证
 
 ```bash
 node scripts/check-package.mjs
 python3 -m unittest discover -s skills/source-code-learning-coach/tests -p 'test_manage_learning_workspace.py'
+node scripts/verify-dsh-install.mjs
 ```
+
+如需指定 DSH 可执行文件，显式传入路径：
+
+```bash
+node scripts/verify-dsh-install.mjs --dsh-bin /path/to/dsh
+```
+
+DSH 验证器会创建临时 Profile、临时 Home 与包管理器缓存；它安装本地候选包、输出组合后的配置，并检查已安装的 Skill 目录中是否发现两个内置 Skill。成功时会报告隔离验证通过。找不到请求的 `dsh` 可执行文件时，会明确报告 `skipped` 并以成功状态结束；安装、配置或 Skill 发现失败则会以非零状态结束。
 
 安装、Skill 发现与图表交付的实际结果见[验收报告](docs/verification.md)。升级需要显式更新快照并重新验证；插件运行时不会自动下载可执行依赖。
 

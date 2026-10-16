@@ -1,6 +1,6 @@
 {
   "name": "source-code-learning-plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Learn repositories from real source with resumable progress and consented interactive diagrams.",
   "author": {
     "name": "Xuermosi",

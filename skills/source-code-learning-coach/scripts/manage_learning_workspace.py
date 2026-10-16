@@ -2731,7 +2731,21 @@ def command_init(args: argparse.Namespace) -> Path:
     try:
         day_width = max(2, len(str(route_days)))
         for day in normalized["days"]:
-            (temporary_root / f"Day{day['day']:0{day_width}d}").mkdir()
+            day_directory = temporary_root / f"Day{day['day']:0{day_width}d}"
+            day_directory.mkdir()
+            checkpoints = "；".join(
+                f"{checkpoint['id']}：{checkpoint['title']}（{checkpoint['weight']}%）"
+                for checkpoint in day["checkpoints"]
+            )
+            materialize_template(
+                "day-learning-unit.md",
+                day_directory / "学习单元.md",
+                {
+                    "DAY_NUMBER": day["day"],
+                    "DAY_TITLE": day["title"],
+                    "CHECKPOINTS": checkpoints,
+                },
+            )
 
         learning_root_id = str(uuid.uuid4())
         state = _initial_state(normalized, repository, final_root, learning_root_id)
