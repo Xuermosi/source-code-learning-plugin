@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
+import { selectPluginSkills } from './installed-skill-selection.mjs';
 
 const [source, binary = 'codex', suppliedCwd] = process.argv.slice(2);
 if (!source) throw new Error('Usage: node scripts/verify-install.mjs <marketplace-root-or-github-repo> [codex-binary] [working-directory]');
@@ -49,14 +50,11 @@ try {
   const skills = response.data.flatMap((entry) => entry.skills);
   const cacheRoot = fs.realpathSync(path.join(env.CODEX_HOME, 'plugins', 'cache', 'source-code-learning', 'source-code-learning-plugin'));
   const found = [];
-  for (const name of ['source-code-learning-coach', 'archify']) {
-    const entries = skills.filter((skill) => path.basename(path.dirname(skill.path)) === name);
-    assert.equal(entries.length, 1, `Expected exactly one ${name}; found ${JSON.stringify(entries.map((s) => s.path))}`);
-    const skill = entries[0];
+  for (const skill of selectPluginSkills(skills, cacheRoot)) {
     const relative = path.relative(cacheRoot, fs.realpathSync(skill.path));
     assert.ok(relative && !relative.startsWith('..') && !path.isAbsolute(relative), `Not from isolated plugin cache: ${skill.path}`);
     found.push({ name: skill.name, path: skill.path, enabled: skill.enabled });
-    assert.notEqual(skill.enabled, false, `Skill disabled: ${name}`);
+    assert.notEqual(skill.enabled, false, `Skill disabled: ${skill.name}`);
   }
   console.log(JSON.stringify({ status: 'passed', source, testRoot, installedSkillPaths: found }, null, 2));
 } finally {

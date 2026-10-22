@@ -59,7 +59,7 @@ test('DSH bundle metadata is aligned and isolated', () => {
   assert.equal(packageJson.name, 'source-code-learning-plugin');
   assert.equal(packageJson.name, plugin.name);
   assert.equal(packageJson.name, codexPlugin.name);
-  assert.equal(packageJson.version, '0.2.0');
+  assert.equal(packageJson.version, '0.3.1');
   assert.equal(packageJson.version, plugin.version);
   assert.equal(packageJson.version, codexPlugin.version);
   assert.equal(packageJson.version, bundledSources.pluginVersion);

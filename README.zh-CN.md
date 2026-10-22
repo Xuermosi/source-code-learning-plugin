@@ -113,7 +113,7 @@ LICENSE
 THIRD_PARTY_NOTICES.md
 ```
 
-插件版本为 **0.2.0**。Archify 为 **3.0.1**（`v3.0.1`）。学习教练以提交 `63e0587c2be1415566a8135863f099210a2ae205` 为基线；图表交接、MIT 许可，以及每日学习单元/固定节奏的审查修改均记录在 `bundled-sources.json`。轻量单 Skill 版仍可在[原教练仓库](https://github.com/Xuermosi/source-code-learning-coach)使用。
+插件版本为 **0.3.1**。Archify 为 **3.2.0**（`v3.2.0`，提交 `208acba8d412335185b2056fedf54b3405df43fb`）；已核验的子树 tree 与归档 SHA-256 记录在 `bundled-sources.json`。学习教练以提交 `63e0587c2be1415566a8135863f099210a2ae205` 为基线；图表交接、MIT 许可，以及每日学习单元/固定节奏的审查修改也记录在其中。轻量单 Skill 版仍可在[原教练仓库](https://github.com/Xuermosi/source-code-learning-coach)使用。
 
 ## 验证
 

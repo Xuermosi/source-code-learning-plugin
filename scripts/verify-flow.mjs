@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import { updateReasonFromFinalizeReceipt } from './finalizer-update-receipt.mjs';
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const installedRoot = fs.realpathSync(process.argv[2] || packageRoot);
@@ -48,7 +49,10 @@ if (receipt.layoutReviewRecommendation?.action === 'inspect-sequence-width' && !
 }
 assert.equal(receipt.ok, true);
 assert.equal(receipt.gates['browser-check'], 'pass');
-assert.equal(receipt.update.reason, 'disabled');
+assert.equal(
+  updateReasonFromFinalizeReceipt(receipt, (file) => JSON.parse(fs.readFileSync(file, 'utf8'))),
+  'disabled',
+);
 fs.writeFileSync(path.join(testRoot, 'finalize-stdout.json'), JSON.stringify(receipt, null, 2));
 manage(['register-artifact', '--learning-root', learningRoot, '--owner-kind', 'source', '--owner-dir', owner, '--artifact', output]);
 const before = JSON.parse(fs.readFileSync(path.join(learningRoot, '学习状态.json'), 'utf8'));

@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "source-code-learning-plugin",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "Learn repositories from real source with resumable progress and consented interactive diagrams.",
   "author": {
     "name": "Xuermosi",

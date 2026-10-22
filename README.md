@@ -113,7 +113,7 @@ LICENSE
 THIRD_PARTY_NOTICES.md
 ```
 
-Plugin version: **0.2.0**. Archify: **3.0.1** (`v3.0.1`). Coach baseline: commit `63e0587c2be1415566a8135863f099210a2ae205`, with plugin-local diagram handoff, MIT license, and the reviewed Day-plan/cadence additions recorded in `bundled-sources.json`. The standalone [coach repository](https://github.com/Xuermosi/source-code-learning-coach) remains available as the lightweight single-skill edition.
+Plugin version: **0.3.1**. Archify: **3.2.0** (`v3.2.0`, commit `208acba8d412335185b2056fedf54b3405df43fb`). The verified subtree tree and archive SHA-256 are recorded in `bundled-sources.json`. Coach baseline: commit `63e0587c2be1415566a8135863f099210a2ae205`, with plugin-local diagram handoff, MIT license, and the reviewed Day-plan/cadence additions recorded there. The standalone [coach repository](https://github.com/Xuermosi/source-code-learning-coach) remains available as the lightweight single-skill edition.
 
 ## Verify
 
