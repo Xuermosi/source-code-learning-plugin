@@ -36,9 +36,21 @@ ARCHIFY_UPDATE_CHECK_DISABLED=1 node <bundled-archify>/bin/archify.mjs finalize 
 
 For a non-repository-backed diagram, omit `--repo-root` and make that evidence limitation explicit. For a one-off explanation with no learning state, use Archify's normal output-folder rules; create no Day state or artifact registry just to draw a requested diagram.
 
-## Verify and register before advancing progress
+## Verify, review, and register before advancing progress
 
-Require exit code 0 and a passing `finalize` receipt, including the actual `browser-check` result. Keep candidate, HTML, delivery metadata and finalizer evidence together. Follow a required sequence-width review if the receipt recommends it. Automated checks do not prove perceptual review; claim only the checks actually performed. A missing browser is an incomplete gate, not success.
+Treat delivery as three distinct gates, in this order:
+
+1. `finalize` must exit 0 with a passing receipt. Its validation, delivery/strict checks, and actual `browser-check` must all pass. Keep the candidate, HTML, delivery metadata, and finalizer evidence together. Follow a required sequence-width review if the receipt recommends it. A missing browser is an incomplete gate, not success.
+2. Run `visual-check` for the final HTML with an artifact-local output directory. It produces the visual receipt, contact sheet, and viewport/theme screenshots; retain them with the artifact.
+3. Manually inspect the relevant generated screenshots and/or contact sheet before approving the diagram. Check at least the intended reading viewport and all source-specific labels, arrows, branches, and whitespace/layout balance. Record the review outcome and what was inspected in a small adjacent human-authored note such as `人工视觉复核.md`; link or name the reviewed visual-check evidence and final HTML hash. Do not call an automated browser result a human visual review.
+
+For example, run the capture gate after `finalize`:
+
+```text
+ARCHIFY_UPDATE_CHECK_DISABLED=1 node <bundled-archify>/bin/archify.mjs visual-check <slug>.html --out-dir visual-check --json
+```
+
+If the visual inspection finds a defect, make only Archify's bounded repair, rerun all three gates against the repaired final HTML, and repeat the manual review. Do not register the earlier artifact as approved.
 
 Then register the HTML with the coach's manager:
 
@@ -46,8 +58,8 @@ Then register the HTML with the coach's manager:
 python3 <coach>/scripts/manage_learning_workspace.py register-artifact --learning-root <validated-root> --owner-kind <source-or-day-overview> --owner-dir <validated-owner> --artifact <checked-html>
 ```
 
-Register before completing a checkpoint that seals this stage. Register extra evidence files only if they are useful learning artifacts; do not invent JSON state fields or rewrite managed Markdown blocks. Return the HTML link, diagram type, validation/browser evidence, and the corresponding source/stage link to the learner.
+Register only after the manual review passes, and before completing a checkpoint that seals this stage. Register extra evidence files only if they are useful learning artifacts; do not invent JSON state fields or rewrite managed Markdown blocks. If a checkpoint was already sealed when a defect is found, do not add the repaired artifact to that sealed stage: reopen the checkpoint with the manager, work in the new revision stage, generate and register the repaired artifact there, then complete the checkpoint again. Return the HTML link, diagram type, automated validation/browser evidence, manual visual-review result, and the corresponding source/stage link to the learner.
 
 ## Incomplete delivery
 
-On a missing sibling Skill or failed delivery gate, follow Archify's bounded repairs. Do not register the diagram or advance progress because of a diagram failure. For a validated active persistent Day, record the pending diagram in the active stage's `当日总结.md`, under its pending/remaining human-authored section. If no active persistent state exists, report the pending diagram in chat without creating a summary in a guessed location. Resume ordinary teaching only when the learner's diagram choice has been resolved.
+On a missing sibling Skill, failed automated gate, or failed manual review, follow Archify's bounded repairs. Do not register the diagram or advance progress because of a diagram failure. For a validated active persistent Day, record the pending diagram in the active stage's `当日总结.md`, under its pending/remaining human-authored section. If no active persistent state exists, report the pending diagram in chat without creating a summary in a guessed location. Resume ordinary teaching only when the learner's diagram choice has been resolved.
