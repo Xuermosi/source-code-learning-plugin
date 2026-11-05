@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pluginVersion": "0.3.3",
+  "pluginVersion": "0.3.4",
   "sources": [
     {
       "name": "source-code-learning-coach",
@@ -15,11 +15,12 @@
         "Added a confirmed Day learning-unit template and initialization for every multi-Day route.",
         "Added the daily plan-to-call-chain-to-small-source-segment teaching cadence and deferred assessment until a closed flow.",
         "Added a role-annotated execution call-chain tree at the start of every new flow, gated source close-reading on explicit learner request, acceptance-based oral questions, and consented archiving into per-Day oral-answer archives.",
-        "Replaced the progress-range stage model with learner-named learning chains: schema v2, `begin-chain` lifecycle, Day-level sources and Day-level files, and per-chain `NN-链名/产物/` diagram ownership."
+        "Replaced the progress-range stage model with learner-named learning chains: schema v2, `begin-chain` lifecycle, Day-level sources and Day-level files, and per-chain `NN-链名/产物/` diagram ownership.",
+        "Removed the generated source-directory layer: no `add-source`, `源码导读.md`, `.learning-source.json`, or `sources` registry; schema v3; chain `链说明.md` records the source entry points; artifacts have `chain` and `day-overview` owners only."
       ],
       "files": {
         "agents/openai.yaml": "b2a2dd4479aff6f6eac16208945948b540f3f7516674c4552394a24e353e51e4",
-        "assets/templates/chain-brief.md": "62b1840db8a4323cca8dd81fc6408bb317d17f55a52c401f7cc4d8f3de295b6f",
+        "assets/templates/chain-brief.md": "7eabadca1cea1c62ed04d3f7d5eed9ec6367340a8ed637bdfd5e425728c40e00",
         "assets/templates/day-learning-unit.md": "d494974992d4e8f7f9237fecf3c19399d599490155a7d885b0d09cfa4e748a4a",
         "assets/templates/day-overview.md": "1ab9ce1b683546c6c80bf680e56891fa7a0c5c804db501f2a588ea6f3ea7661a",
         "assets/templates/day-summary.md": "140cd2a2fa00b4d063ffb863f3c822410a0efb289614c7a081c210ac4bf3784a",
@@ -27,13 +28,12 @@
         "assets/templates/learning-state.md": "58dbc7d2fb80dd6f634c83ab10dca440f6e37d27e36ebc384fdf403b3f728307",
         "assets/templates/oral-answer-archive.md": "557f7acdb3ee0bbde6982db59778dc0d87bc796b75bda25c5769ed842622e142",
         "assets/templates/questions-and-answers.md": "b37895ba52faf9a45201f6f475a3db0cb99b6e38575fa0d7637b7d980339fc20",
-        "assets/templates/source-guide.md": "73bc919f1de13ea83d6c7c328cb433fe3e8db19e0bfd8dd304ebea47683059b0",
         "LICENSE": "26811217471c691a42d34365ffef9ce27924764078d284645786b29f713836b9",
-        "references/diagram-handoff.md": "93458bef589ea78c1a82cec50d8a2816087e7261108ef2378678499df32161c5",
-        "references/workspace-contract.md": "bf616a70ad959c4ebbfb7570707f18fd1801ca952c3403d666d5e5a27f641437",
-        "scripts/manage_learning_workspace.py": "59ea8f090de2b99386836bb5188dcc2353bc5bf149c5c69d238d319716ba70b0",
-        "SKILL.md": "94ce0240b297a2e1bd29a33fc1507e98cff13605e0d49b3b5394b5d30415772c",
-        "tests/test_manage_learning_workspace.py": "75864397871bf05eb7dba4830e4ce2eb4d049b5ad3e38c1b34ec2bde406f3067"
+        "references/diagram-handoff.md": "28bd56669cde5fe3a122af0be395e7a6418b183dfe037e3adbdec17c4995bfc9",
+        "references/workspace-contract.md": "4252b0a4fc618929a4e515cb04ae8b765e86567ed5b568c0cf4a44e496f9eeee",
+        "scripts/manage_learning_workspace.py": "edeb2db94b526b75cf2601ef779a187a57fa4cc9766bca394c86e3e76c64dedd",
+        "SKILL.md": "fd256c544b2e3ac2513a8015e037fafd511474a3243ccc848dad365716c64cdc",
+        "tests/test_manage_learning_workspace.py": "c38571bf1b8f93f73aba273a003bfa8e6444e8c8dc79f8c2d2e7a5c76d5f94d3"
       }
     },
     {
