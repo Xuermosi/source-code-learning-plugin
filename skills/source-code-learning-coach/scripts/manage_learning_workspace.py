@@ -2746,6 +2746,14 @@ def command_init(args: argparse.Namespace) -> Path:
                     "CHECKPOINTS": checkpoints,
                 },
             )
+            materialize_template(
+                "oral-answer-archive.md",
+                day_directory / "口述回答归档.md",
+                {
+                    "DAY_NUMBER": day["day"],
+                    "DAY_TITLE": day["title"],
+                },
+            )
 
         learning_root_id = str(uuid.uuid4())
         state = _initial_state(normalized, repository, final_root, learning_root_id)

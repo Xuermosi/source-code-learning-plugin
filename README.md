@@ -75,6 +75,7 @@ my-project-3天学习路线/
 ├── 学习状态.md
 ├── Day01/
 │   ├── 学习单元.md
+│   ├── 口述回答归档.md
 │   └── 进度条0-30%/
 │       ├── 01-entry-source/
 │       │   ├── 源码导读.md
@@ -85,7 +86,7 @@ my-project-3天学习路线/
 └── Day03/
 ```
 
-Every `DayXX/学习单元.md` records the confirmed central question, one call-and-return flow, bounded source scope, pitfalls, completion check, and planned artifacts. The first lesson follows that plan → main call chain → one small source segment. Progress comes from completed weighted checkpoints; source-specific artifacts remain associated with their reading order and source owner, while Day-wide artifacts belong to the active stage. Resume from validated JSON state in a later conversation.
+Every `DayXX/学习单元.md` records the confirmed central question, one call-and-return flow, bounded source scope, pitfalls, completion check, and planned artifacts. Every `DayXX/口述回答归档.md` is initialized empty; the coach appends a consented oral answer only after the learner replies `归档`, keeping each entry in the fixed 题干 → 代码执行调用链 → 口述答案 order. The first lesson follows that plan → main call chain → one small source segment; each new call chain begins with a role-annotated execution call-chain tree, and real source is read closely only on the learner's explicit request. After a flow closes, the coach asks one oral question grounded in that Day's acceptance criteria. Progress comes from completed weighted checkpoints; source-specific artifacts remain associated with their reading order and source owner, while Day-wide artifacts belong to the active stage. Resume from validated JSON state in a later conversation.
 
 At daily close, the coach offers an integrated framework diagram and summary linking the day's flows. A one-off source explanation does not create a persistent learning workspace.
 
@@ -113,7 +114,7 @@ LICENSE
 THIRD_PARTY_NOTICES.md
 ```
 
-Plugin version: **0.3.1**. Archify: **3.2.0** (`v3.2.0`, commit `208acba8d412335185b2056fedf54b3405df43fb`). The verified subtree tree and archive SHA-256 are recorded in `bundled-sources.json`. Coach baseline: commit `63e0587c2be1415566a8135863f099210a2ae205`, with plugin-local diagram handoff, MIT license, and the reviewed Day-plan/cadence additions recorded there. The standalone [coach repository](https://github.com/Xuermosi/source-code-learning-coach) remains available as the lightweight single-skill edition.
+Plugin version: **0.3.2**. Archify: **3.2.0** (`v3.2.0`, commit `208acba8d412335185b2056fedf54b3405df43fb`). The verified subtree tree and archive SHA-256 are recorded in `bundled-sources.json`. Coach baseline: commit `63e0587c2be1415566a8135863f099210a2ae205`, with plugin-local diagram handoff, MIT license, and the reviewed Day-plan/cadence additions recorded there. The standalone [coach repository](https://github.com/Xuermosi/source-code-learning-coach) remains available as the lightweight single-skill edition.
 
 ## Verify
 

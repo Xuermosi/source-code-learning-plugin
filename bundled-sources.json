@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pluginVersion": "0.3.1",
+  "pluginVersion": "0.3.2",
   "sources": [
     {
       "name": "source-code-learning-coach",
@@ -13,7 +13,8 @@
         "Added a sibling Archify handoff reference and routed consented diagrams through it.",
         "Resolved workspace-manager scripts from the installed coach root rather than the studied repository CWD.",
         "Added a confirmed Day learning-unit template and initialization for every multi-Day route.",
-        "Added the daily plan-to-call-chain-to-small-source-segment teaching cadence and deferred assessment until a closed flow."
+        "Added the daily plan-to-call-chain-to-small-source-segment teaching cadence and deferred assessment until a closed flow.",
+        "Added a role-annotated execution call-chain tree at the start of every new flow, gated source close-reading on explicit learner request, acceptance-based oral questions, and consented archiving into per-Day oral-answer archives."
       ],
       "files": {
         "agents/openai.yaml": "b2a2dd4479aff6f6eac16208945948b540f3f7516674c4552394a24e353e51e4",
@@ -22,14 +23,15 @@
         "assets/templates/day-summary.md": "68c141682ad35511f74c3b8fb09c1cd606f9c085ee073402f2813794fac41215",
         "assets/templates/learning-roadmap.md": "7abc98b50cc838c92114cba328b3d4ead0623c7a95bdda52fd30a42a14ec7f6a",
         "assets/templates/learning-state.md": "eed97f6b409c828802a88b2ae3029821b47a082a1d2039512104a8921acb2431",
+        "assets/templates/oral-answer-archive.md": "557f7acdb3ee0bbde6982db59778dc0d87bc796b75bda25c5769ed842622e142",
         "assets/templates/questions-and-answers.md": "b37895ba52faf9a45201f6f475a3db0cb99b6e38575fa0d7637b7d980339fc20",
         "assets/templates/source-guide.md": "817422c3fb2d0aab5d1e59b80241d70553505e7e6f6dbbd07f353794f34372f5",
         "LICENSE": "26811217471c691a42d34365ffef9ce27924764078d284645786b29f713836b9",
         "references/diagram-handoff.md": "d10fd6f445ababdbbb23310649ff372a65dd0613477a37a70833793f5ec121d2",
         "references/workspace-contract.md": "17091afc28af4d55476cbdd9df2d3efc60b3b678a3c2e72ab0b49fd118cfaf78",
-        "scripts/manage_learning_workspace.py": "eccbfa0c9295351cd2b1fc77b2aca05339aa5e9cd8a22f9d8f8a283e8429bb84",
-        "SKILL.md": "b0927723ecc867732a888c4d0a79b0370df2a4cddf46e21eeeab88fb53a44dd9",
-        "tests/test_manage_learning_workspace.py": "e535c81d0d9e4972fd5e7321caf85aa98aee8b8321ac9b5820b8c272ed7555b0"
+        "scripts/manage_learning_workspace.py": "d6f1ad94b1347bfe3c751b035409bf01ae29ffeee264daca07cfaeeaf2026d95",
+        "SKILL.md": "8860b921bb1d80ffc5853d800d5444070da375ca383330d695877ea3eeaac009",
+        "tests/test_manage_learning_workspace.py": "e0fdbdc60df9bb464f4f74dfd15a2e4e69d8ed726b21002aa228c993dbd9dacd"
       }
     },
     {
