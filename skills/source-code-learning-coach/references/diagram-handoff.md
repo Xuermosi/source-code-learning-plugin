@@ -20,13 +20,13 @@ Carry forward these facts from the closed flow:
 - The canonical repository, current source revision and relevant dirty paths where applicable.
 - The actual call/return chain, branches and unresolved facts, with repository-relative file/line evidence.
 - The diagram type: `sequence` for calls/returns, `workflow` for decisions/process, `architecture` for components, `dataflow` for movement/transformation, or `lifecycle` for status/recovery.
-- For persistent study: a validated active stage, its source owner (or `day-overview` owner for a Day-wide diagram), and that owner's directory. Read state through the coach manager's contract rather than inferring paths from a chat label.
+- For persistent study: a validated active Day, the active chain owner (for a chain-scoped diagram), a `day-overview` owner (for a Day-wide diagram), or a source owner (for a source-scoped diagram), and that owner's directory. Read state through the coach manager's contract rather than inferring paths from a chat label.
 
 Stay inside the consented source slice; choosing a diagram is not permission to expand the study scope.
 
 ## Generate within the learning owner
 
-Persistent study: for a source owner, create a new `产物/<type>-<slug>-<timestamp>/` child beneath its validated source directory. For a Day-wide owner, create the child directly in the validated `当日总览产物` directory. Run Archify with this diagram directory as the working directory. Place `candidate.json` and `<slug>.html` there; set `meta.output` to the portable basename `<slug>.html`. Pass the traced repository using `--repo-root` when the candidate includes repository-backed evidence. This reconciles Archify's CWD-relative output contract with the coach's sibling learning workspace.
+Persistent study: for a source owner, create a new `产物/<type>-<slug>-<timestamp>/` child beneath its validated source directory (`DayNN/NN-label/`). For a chain-scoped diagram, create the child beneath the chain's validated `产物/` directory (`DayNN/NN-链名/产物/`). For a Day-wide owner, create the child directly in the validated `DayNN/当日总览产物` directory. Run Archify with this diagram directory as the working directory. Place `candidate.json` and `<slug>.html` there; set `meta.output` to the portable basename `<slug>.html`. Pass the traced repository using `--repo-root` when the candidate includes repository-backed evidence. This reconciles Archify's CWD-relative output contract with the coach's sibling learning workspace.
 
 Use the sibling renderer's absolute path and disable background update traffic for learning generation:
 
@@ -55,11 +55,11 @@ If the visual inspection finds a defect, make only Archify's bounded repair, rer
 Then register the HTML with the coach's manager:
 
 ```text
-python3 <coach>/scripts/manage_learning_workspace.py register-artifact --learning-root <validated-root> --owner-kind <source-or-day-overview> --owner-dir <validated-owner> --artifact <checked-html>
+python3 <coach>/scripts/manage_learning_workspace.py register-artifact --learning-root <validated-root> --owner-kind <source-day-overview-or-chain> --owner-dir <validated-owner> --artifact <checked-html>
 ```
 
-Register only after the manual review passes, and before completing a checkpoint that seals this stage. Register extra evidence files only if they are useful learning artifacts; do not invent JSON state fields or rewrite managed Markdown blocks. If a checkpoint was already sealed when a defect is found, do not add the repaired artifact to that sealed stage: reopen the checkpoint with the manager, work in the new revision stage, generate and register the repaired artifact there, then complete the checkpoint again. Return the HTML link, diagram type, automated validation/browser evidence, manual visual-review result, and the corresponding source/stage link to the learner.
+Register only after the manual review passes, and before completing a checkpoint or beginning the next chain. Register extra evidence files only if they are useful learning artifacts; do not invent JSON state fields or rewrite managed Markdown blocks. If a chain was already sealed when a defect is found, do not add the repaired artifact to that sealed chain: begin a new chain with the manager, generate and register the repaired artifact there, then continue. Return the HTML link, diagram type, automated validation/browser evidence, manual visual-review result, and the corresponding source/chain link to the learner.
 
 ## Incomplete delivery
 
-On a missing sibling Skill, failed automated gate, or failed manual review, follow Archify's bounded repairs. Do not register the diagram or advance progress because of a diagram failure. For a validated active persistent Day, record the pending diagram in the active stage's `当日总结.md`, under its pending/remaining human-authored section. If no active persistent state exists, report the pending diagram in chat without creating a summary in a guessed location. Resume ordinary teaching only when the learner's diagram choice has been resolved.
+On a missing sibling Skill, failed automated gate, or failed manual review, follow Archify's bounded repairs. Do not register the diagram or advance progress because of a diagram failure. For a validated active persistent Day, record the pending diagram in the Day's `当日总结.md`, under its pending/remaining human-authored section. If no active persistent state exists, report the pending diagram in chat without creating a summary in a guessed location. Resume ordinary teaching only when the learner's diagram choice has been resolved.
